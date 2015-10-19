@@ -23,7 +23,7 @@ public class PropertyBinder {
     }
 
     public static <T> T from(final Class<T> tClass) {
-        checkState(referenceGrabber.get() == null, "Race Condition with threadlocal!!!");
+        checkState(referenceGrabber.get() == null, "Usage ... TODO");
 
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(tClass);
