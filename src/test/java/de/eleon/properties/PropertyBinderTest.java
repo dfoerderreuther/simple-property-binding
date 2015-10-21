@@ -19,10 +19,12 @@ public class PropertyBinderTest {
         Property<UseMe, String> stringProperty = property(from(UseMe.class).getName());
 
         UseMe test = new UseMe();
-        stringProperty.set(test, "Dominik");
 
+        stringProperty.set(test, "Dominik");
         assertThat(test.getName(), is("Dominik"));
-        assertThat(stringProperty.get(test), is("Dominik"));
+
+        test.setName("Michael");
+        assertThat(stringProperty.get(test), is("Michael"));
     }
 
 
@@ -32,10 +34,12 @@ public class PropertyBinderTest {
         Property<UseMe, Integer> integerProperty = property(from(UseMe.class).getChildren());
 
         UseMe test = new UseMe();
-        integerProperty.set(test, 10);
 
+        integerProperty.set(test, 10);
         assertThat(test.getChildren(), is(10));
-        assertThat(integerProperty.get(test), is(10));
+
+        test.setChildren(20);
+        assertThat(integerProperty.get(test), is(20));
     }
 
     @Test
@@ -44,11 +48,14 @@ public class PropertyBinderTest {
         Property<UseMe, Date> dateProperty = property(from(UseMe.class).getBirthDate());
 
         UseMe test = new UseMe();
+
         final Date testDate = DateTime.parse("1910-01-01").toDate();
         dateProperty.set(test, testDate);
-
         assertThat(test.getBirthDate(), is(testDate));
-        assertThat(dateProperty.get(test), is(testDate));
+
+        final Date testDate2 = DateTime.parse("1920-02-02").toDate();
+        test.setBirthDate(testDate2);
+        assertThat(dateProperty.get(test), is(testDate2));
     }
 
     @Test
@@ -57,10 +64,12 @@ public class PropertyBinderTest {
         Property<UseMe, Boolean> booleanProperty = property(from(UseMe.class).isActive());
 
         UseMe test = new UseMe();
-        booleanProperty.set(test, true);
 
+        booleanProperty.set(test, true);
         assertThat(test.isActive(), is(true));
-        assertThat(booleanProperty.get(test), is(true));
+
+        test.setActive(false);
+        assertThat(booleanProperty.get(test), is(false));
     }
 
     public static class UseMe {
